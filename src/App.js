@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import CreateProductComponent from "./components/CreateProduct";
+import UpdateProductComponent from "./components/UpdateProduct";
+import DeleteProductComponent from "./components/DeleteProduct";
+import ProductCollectionComponent from "./components/ProductCollection";
+import NavbarComponent from "./components/Navbar";
 
-function App() {
+const App = () => {
+  const [productId, setProductId] = useState("");
+  const [editProduct, setEditProduct] = useState(false);
+  const [deleteProduct, setDeleteProduct] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavbarComponent />
+      <div className="p-4">
+        <ProductCollectionComponent
+          setProductId={setProductId}
+          setEditProduct={setEditProduct}
+          setDeleteProduct={setDeleteProduct}
+        />
+        <CreateProductComponent />
+        {editProduct && (
+          <UpdateProductComponent
+            id={productId}
+            setEditProduct={setEditProduct}
+          />
+        )}
+        {deleteProduct && (
+          <DeleteProductComponent
+            id={productId}
+            setDeleteProduct={setDeleteProduct}
+          />
+        )}
+      </div>
+    </>
   );
-}
-
+};
 export default App;
